@@ -200,28 +200,25 @@ export class ListGroupComponent {
     this.groupService.getTransaction(this.group_id as string).subscribe(
       response => {
         if (response.success) {
-          // console.log(response.data);
           this.transactions = response.data;
           this.transactionsList = response.data;
 
-          for(let all of this.transactions){
-            if(this.perUserTemp.length === 0){
-              this.perUserTemp.push(all)
-              this.names.push(all.paid_by.fullname);
-            }else{
-              for(let each of this.perUserTemp){
-                if(all.paid_by.user_id === each.paid_by.user_id){
-                  each.amount += all.amount;
-                  break;
-                }else{
-                  this.perUserTemp.push(all);
-                  this.names.push(all.paid_by.fullname)
-                  break;
-                }
+          for (let all of this.transactions) {
+            let found = false;
+            for (let each of this.perUserTemp) {
+              if (each.paid_by.user_id === all.paid_by.user_id) {
+                each.amount += all.amount;
+                found = true;
+                break;
               }
+            }
+            if (!found) {
+              this.perUserTemp.push(all);
+              this.names.push(all.paid_by.fullname);
             }
           }
           
+         
           const worker = new Worker(new URL('./group-list.worker.ts', import.meta.url));
           worker.onmessage = ({ data }) => {
             this.totalExpense = data;
