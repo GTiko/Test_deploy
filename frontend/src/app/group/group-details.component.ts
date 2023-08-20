@@ -33,7 +33,7 @@ import { INITIAL_TRANSACTION, ITransaction } from '../users/IUser.interface';
     </table> <br>
 
     <div [ngStyle]="{'display':'flex','justify-content':'center'}">
-      <img  *ngIf="found" src="http://localhost:3000/receipts/{{fileName}}" alt="not provided">
+      <img  *ngIf="found" src="https://track-and-split-expenses.onrender.com/receipts/{{fileName}}" alt="not provided">
     </div>
     
 

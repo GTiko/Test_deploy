@@ -12,7 +12,10 @@ import { SignupComponent } from './signup.component';
 import jwt_decode from 'jwt-decode';
 import { IState } from './users/IUser.interface';
 import { addTokenInterceptor } from './auth/add-token.interceptor';
-import { ErrorPageComponent } from './error-page.component'
+import { ErrorPageComponent } from './error-page.component';
+import { WelcomeComponent } from './welcome.component'
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 function bootstrap() {
   let userService = inject(DataService);
@@ -27,13 +30,23 @@ function bootstrap() {
 }
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SignupComponent, ErrorPageComponent],
+  declarations: [AppComponent, LoginComponent, SignupComponent, ErrorPageComponent, WelcomeComponent],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000, 
+      positionClass: 'toast-top-right', 
+      preventDuplicates: true,
+      closeButton: true
+    }),
+    BrowserAnimationsModule,
+    
     RouterModule.forRoot([
-      { path: '', redirectTo: 'login', pathMatch: 'full' },
+
+      { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+      { path: 'welcome', component: WelcomeComponent },
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignupComponent },
       {

@@ -1,9 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
-
+/* Existing CSS Styles */
 body {
   font-family: cursive;
   font-size: large;
-  
+}
+
+.home{
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+.home:hover{
+  text-decoration: underline;
 }
 
 table,
@@ -18,7 +25,6 @@ table {
   margin-left: 30px;
   box-shadow: 0 0 20px 5px rgba(1, 35, 255, 0.42);
   padding: 10px;
-  ;
 }
 
 table tr:nth-child(even) {
@@ -37,29 +43,20 @@ table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
-  background-color: #142057;
+  background-color: #2f6f6b;
   color: white;
 }
 
-button:hover{
-  transform: scale(1.05);
-  z-index: 1;
-}
-
 #forms {
-  /* margin-left: 10%;
-  margin-right: 10%; */
   margin: 10%;
   padding: 50px;
   box-shadow: 0 0 20px 5px rgba(1, 35, 255, 0.235);
-  /* margin: 0 auto; */
   border-radius: 10px;
-  
 }
 
-#loginSignUp, #createForm{
+#loginSignUp {
   padding: 50px;
-  margin: 5%;
+  margin-top: 10px;
   margin-left: 30%;
   margin-right: 25%;
   display: grid;
@@ -69,8 +66,21 @@ button:hover{
   text-align: left;
   box-shadow: 0 0 20px 5px rgba(255, 1, 1, 0.1);
 }
+
+#createForm{
+  padding: 50px;
+  margin-top: 5%;
+  margin-left: 3%;
+  margin-right: 5%;
+  display: grid;
+  grid-template-columns: auto;
+  justify-content: center;
+  align-self: center;
+  text-align: left;
+  box-shadow: 0 0 20px 5px rgba(255, 1, 1, 0.1);
+}
+
 #loginForm{
-  /* style="display: flex; flex-direction: column; align-items: center;" */
   padding: 50px;
   margin: 5%;
   margin-left: 30%;
@@ -84,16 +94,45 @@ button:hover{
   box-shadow: 0 0 20px 5px rgba(73, 84, 238, 0.1);
 }
 
+button{
+  padding: 10px;
+  transition: transform 0.3s ease, z-index 0.3s ease;
+}
+
+button:hover{
+  transform: scale(1.05);
+  z-index: 1;
+}
+
 input {
   margin: -3px;
   padding: 10px;
   border-radius: 10px;
   font-size: medium;
-  border-color: #142057;
+  border-color: #2f6f6b;
+}
+
+@media (max-width: 768px) {
+  form {
+    padding: 10px;
+  }
+
+  input {
+    width: auto;
+    margin-bottom: 10px;
+  }
+
+  a {
+    margin: 10px 0;
+    text-align: center;
+  }
+  #createForm button{
+    width: 100%;
+  }
 }
 
 h1, nav, header{
-  background-color: #142057;
+  background-color: #2f6f6b;
   color: white;
 }
 
@@ -105,7 +144,7 @@ h2, h1{
 nav{
   display: flex;
   justify-content: space-between;
-   padding: 10px;
+  padding: 10px;
 }
 
 #search{
@@ -118,7 +157,7 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #0a4275;
+  background-color: #750a0a;
   color: white;
   text-align: center;
   padding: 10px 0;
@@ -127,5 +166,103 @@ footer {
 img {
   object-fit: contain;
   width: 700px;
-  height: 400px
+  height: 400px;
 }
+
+/* Welcome Page Styles */
+header {
+  background-color:  #2f6f6b;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+main {
+  padding: 20px;
+}
+
+
+
+
+.hero {
+  background-image: url('./assets/Track_and_Split_Expense.png');
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+  display: grid;
+  
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fad710;
+  
+}
+
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+.login-btn, .signup-btn {
+  display: inline-block;
+  background-color: #ff6a00;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.login-signup {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.login-btn {
+  background-color: #007bff;
+}
+
+.signup-btn {
+  background-color: #28a745;
+}
+
+
+.login-btn:hover, .signup-btn:hover {
+  background-color: #e65a00;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  height: auto; 
+}
+
+
+
+/* loading spinner */
+
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px; /* Adjust the height as needed */
+}
+
+.loading-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@import 'ngx-toastr/toastr';

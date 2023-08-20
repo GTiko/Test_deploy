@@ -6,6 +6,8 @@ import { IGroupMember, ITransaction } from '../users/IUser.interface';
 import { Chart } from 'chart.js/auto'
 import 'chartjs-plugin-datalabels';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-add-member',
   template: `
@@ -14,7 +16,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
     <div [ngStyle]="{'display':'flex','justify-content':'space-around'}">
       <div [ngStyle]="{'display':'flex','justify-content':'left'}">
-        <h4 [ngStyle]="{ color: color }">{{ message }}</h4>
+        
           <form [formGroup]="addMemberForm" (ngSubmit)="addMember()">
             <input type="text" placeholder="email" formControlName="email" /> &nbsp;
             <button type="submit" class="btn btn-primary">AddMember</button>
@@ -47,7 +49,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
     <form [formGroup]="searchForm" *ngIf="perUserTemp.length!==0">
         <input id="search" type="search" placeholder="search" 
        
-        formControlName='searchField' (keydown)="handleSearch()">
+        formControlName='searchField' (keyup)="handleSearch()">
     </form>
 
     <table *ngIf="perUserTemp.length!==0">
@@ -118,8 +120,8 @@ export class ListGroupComponent {
   private groupService = inject(GroupService);
   private activatedRouter = inject(ActivatedRoute);
   private router = inject(Router);
-  message: string = '';
-  color: string = '';
+  private toastr = inject(ToastrService)
+
   groupMembers: IGroupMember[] = []
   addMemberForm = inject(FormBuilder).nonNullable.group({
     email: '',
@@ -167,21 +169,17 @@ export class ListGroupComponent {
         )
         .subscribe((response) => {
           if (response.success) {
-            this.message = 'Request send'
-            this.color = "green";
+            
+          this.toastr.success('Request send');
+
             this.addMemberForm.get('email')?.setValue('');
             this.getMembers();
-            setTimeout(() => { this.message = '' }, 2000)
           } else {
-            this.message = response.data as unknown as string;
-            this.color = 'red';
-            setTimeout(() => { this.message = '' }, 2000)
+          this.toastr.error(response.data as unknown as string);
           }
         });
     } else {
-      this.message = "This user is already in this group!";
-      this.color = 'red';
-      setTimeout(() => { this.message = '' }, 2000)
+      this.toastr.error("This user is already in this group!");
     }
   }
 

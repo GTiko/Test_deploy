@@ -8,13 +8,13 @@ import { INITIAL_STATE_VALUE } from './users/IUser.interface';
   template: `
 
     <nav *ngIf="isLoggedIn">
-      <a [routerLink]="['', 'users']" [ngStyle]="{color:'#fff'}">Home</a>
-      <button (click)="logout()" class="btn btn-danger"> Logout </button>
+      <a (click)="home()" class="home">Home</a>
+      <button (click)="logout()" class="btn btn-danger" style="width: auto;"> Logout </button>
     </nav>
 
     <router-outlet />
 
-<footer class="text-center text-white" style="background-color: #0a4275;">
+<footer class="text-center text-white" style="background-color:  #2f6f6b;">
 
       <span class="d-flex justify-content-center align-items-center"></span>
  
@@ -46,5 +46,10 @@ export class AppComponent {
     localStorage.clear();
   }
 
-
+  home(){
+    this.isLoggedIn = false;
+    this.dataService.state.set(INITIAL_STATE_VALUE);
+    this.router.navigate(['', 'welcome']);
+    localStorage.clear();
+  }
 }

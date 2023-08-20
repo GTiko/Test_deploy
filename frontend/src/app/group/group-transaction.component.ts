@@ -3,13 +3,19 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { GroupService } from './group.service';
 
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-transaction',
   template: `
   <div id="loginSignUp">
 
     <h2>Transactions</h2>
-    <h4 [ngStyle]="{color: color}"> {{ message }}</h4>
+
+    <div *ngIf="isLoading" class="loading-indicator">
+      <div class="loading-spinner"></div>
+    </div>
+
      <form [formGroup]="transactionForm" (ngSubmit)="submitTransaction()" id="loginForm">
         <input type="text" placeholder="title" formControlName="title"> <br>
         <input type="text" placeholder="description" formControlName="description"> <br>
@@ -34,9 +40,11 @@ import { GroupService } from './group.service';
 export class TransactionComponent {
   private activatedRouter = inject(ActivatedRoute);
   private groupService = inject(GroupService);
+  private toastr = inject(ToastrService);
+
   receiptFile!: File;
-  message: string = '';
-  color: string = '';
+  isLoading: boolean = false; 
+
   group_id = this.activatedRouter.snapshot.paramMap.get('group_id');
   group_name = this.activatedRouter.snapshot.paramMap.get('groupName');
 
@@ -57,6 +65,8 @@ export class TransactionComponent {
   get receipt() { return this.transactionForm.get('receipt') as FormControl }
 
   submitTransaction() {
+    this.isLoading = true;
+
     const formData = new FormData();
     formData.append('title', this.title.value);
     formData.append('description', this.description.value);
@@ -68,8 +78,9 @@ export class TransactionComponent {
     this.groupService.addTransaction(this.group_id as string, formData).subscribe(
       response => {
         if (response.success) {
-          this.message = "Transaction submitted successfully";
-          this.color = 'green';
+
+          this.toastr.success("Transaction submitted successfully");
+
           this.title.setValue('');
           this.description.setValue('');
           this.category.setValue('');
@@ -77,9 +88,9 @@ export class TransactionComponent {
           this.date.setValue('');
           this.receipt.setValue('');
         } else {
-          this.message = "Unable to add transaction!!";
-          this.color = 'red';
+          this.toastr.error( "Unable to add transaction!!");
         }
+        this.isLoading = false;
       }
     )
   }

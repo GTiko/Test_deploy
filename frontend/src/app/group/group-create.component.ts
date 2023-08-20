@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { GroupService } from './group.service';
-import { Router } from '@angular/router';
 import { IGroup } from '../users/IUser.interface';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-group',
@@ -10,9 +10,8 @@ import { IGroup } from '../users/IUser.interface';
   <div id="createForm">  
     <h2>Create Group</h2>
 
-    <h4 [ngStyle]="{ color: color }">{{ message }}</h4>
     <form [formGroup]="titleForm" (ngSubmit)="createGroup()">
-      <input type="text" placeholder="Group name" formControlName="groupName" /> <br />
+      <input type="text" placeholder="Group name" formControlName="groupName" /> &nbsp;
       <button type="submit" [disabled]="titleForm.invalid" class="btn btn-primary">CreateGroup</button>
     </form>
     <a [routerLink]="['', 'users']">back</a>
@@ -23,9 +22,8 @@ import { IGroup } from '../users/IUser.interface';
 })
 export class CreateGroupComponent {
   private groupService = inject(GroupService);
-  private router = inject(Router);
-  message: string = '';
-  color: string = "";
+  private toastr = inject(ToastrService);
+
   groups: IGroup[] = [];
 
 
@@ -51,14 +49,13 @@ export class CreateGroupComponent {
         .createGroup(this.titleForm.get('groupName')?.value as string)
         .subscribe((response) => {
           if (response.success) {
-            this.message = `${this.titleForm.get('groupName')?.value} group created`;
             this.titleForm.get('groupName')?.setValue('');
-            this.color = 'green';
+            this.toastr.success(`${this.titleForm.get('groupName')?.value} group created`);
           }
         });
     } else {
-      this.message = "This group name already exist";
-      this.color = "red";
+      
+      this.toastr.error('This group name already exist');
     }
   }
 
