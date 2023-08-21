@@ -10,13 +10,14 @@ import { ToastrService } from 'ngx-toastr';
   template: `
   <div id="loginSignUp">
 
-    <h2>Transactions</h2>
+   
 
     <div *ngIf="isLoading" class="loading-indicator">
       <div class="loading-spinner"></div>
     </div>
 
      <form [formGroup]="transactionForm" (ngSubmit)="submitTransaction()" id="loginForm">
+      <h1>Transactions</h1>
         <input type="text" placeholder="title" formControlName="title"> <br>
         <input type="text" placeholder="description" formControlName="description"> <br>
         <input type="text" placeholder="category" formControlName="category"> <br>
@@ -26,11 +27,15 @@ import { ToastrService } from 'ngx-toastr';
           (change)="pickFile($event)"
         > <br> <br>
         <button type="submit" [disabled]="transactionForm.invalid"  class="btn btn-primary">Add Transaction</button>
-     </form>
+     
+        <a [routerLink]="['', 'users', 'group', group_id, group_name]"
+            [ngStyle]="{display: 'flex',  'justify-content': 'center'}"
+            [ngClass]="'inline-gray-button'"
+            >back
+        </a>
+      </form>
 
-    <a [routerLink]="['', 'users', 'group', group_id, group_name]"
-        [ngStyle]="{display: 'flex',  'justify-content': 'end'}"
-    >back</a>
+
     
     </div>
   `,

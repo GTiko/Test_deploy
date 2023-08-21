@@ -2,14 +2,19 @@ import { Component, inject } from '@angular/core';
 import { DataService } from './auth/data.service';
 import { Router } from '@angular/router';
 import { INITIAL_STATE_VALUE } from './users/IUser.interface';
+import { faHome, faSignOutAlt, faBell } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
   template: `
 
     <nav *ngIf="isLoggedIn">
-      <a (click)="home()" class="home">Home</a>
-      <button (click)="logout()" class="btn btn-danger" style="width: auto;"> Logout </button>
+      <a (click)="home()" class="home">
+        <fa-icon [icon]="faHome"></fa-icon>
+      </a>
+    <button (click)="logout()" class="btn btn-danger" style="width: auto;"> 
+        <fa-icon [icon]="faSignOutAlt"></fa-icon>
+    </button>
     </nav>
 
     <router-outlet />
@@ -32,6 +37,10 @@ export class AppComponent {
   dataService = inject(DataService);
   router = inject(Router);
   isLoggedIn : boolean = false;
+
+  faSignOutAlt = faSignOutAlt;
+  faHome =  faHome;
+  faBell = faBell;
   
   ngDoCheck(){
     if(this.dataService.state().token){

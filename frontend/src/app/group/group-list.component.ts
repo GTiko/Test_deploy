@@ -8,23 +8,27 @@ import 'chartjs-plugin-datalabels';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { ToastrService } from 'ngx-toastr';
 
+
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-add-member',
   template: `
   <div style="margin-bottom: 50px;">
     <h1>Group {{ groupName }}</h1>
 
-    <div [ngStyle]="{'display':'flex','justify-content':'space-around'}">
-      <div [ngStyle]="{'display':'flex','justify-content':'left'}">
-        
+    <div id="addMemberAddTransaction">
+      <div>
           <form [formGroup]="addMemberForm" (ngSubmit)="addMember()">
             <input type="text" placeholder="email" formControlName="email" /> &nbsp;
-            <button type="submit" class="btn btn-primary">AddMember</button>
+            <button type="submit" class="btn btn-primary" id="addMember">AddMember</button>
           </form>
       </div>
 
         <div style="margin-top: 10px;">
-          <button (click)="addTransaction()" class="btn btn-primary">Add transactions</button>
+          <button (click)="addTransaction()" class="btn btn-primary">
+          <fa-icon [icon]="faPlusCircle"></fa-icon>        
+        </button>
         </div>
     </div>
 
@@ -36,21 +40,26 @@ import { ToastrService } from 'ngx-toastr';
         </span>
       </div>
       <div>
-      <h2>Pending members</h2>
+      <h2>Pending's</h2>
           <div *ngFor="let each of groupMembers">
-           <span *ngIf="each.pending">{{ each.fullname }}</span>
+           <span *ngIf="each.pending"
+            style="color: red;"
+           >
+            {{ each.fullname }}
+          </span>
         </div>
       </div>
     </div>
 
-
     <h2 *ngIf="perUserTemp.length!==0"> Transactions</h2>
 
+    <div class="container">
     <form [formGroup]="searchForm" *ngIf="perUserTemp.length!==0">
         <input id="search" type="search" placeholder="search" 
        
         formControlName='searchField' (keyup)="handleSearch()">
     </form>
+    </div>
 
     <table *ngIf="perUserTemp.length!==0">
       <thead>
@@ -78,18 +87,18 @@ import { ToastrService } from 'ngx-toastr';
       </tbody>
     </table> <br>
     
-    <div [ngStyle]="{display:'flex', 'justify-content': 'space-around', 'align-items': 'center'}"> 
+    <div class="piChartAndTable"> 
 
-      <div [ngStyle]="{'width':'auto'}">
+      <div class="piChart">
         <canvas  id="MyChart" ></canvas>
       </div>
 
       <div>
-    <table *ngIf="perUserTemp.length!==0">
+      <table *ngIf="perUserTemp.length!==0">
           <tr>
             <th>Member Name</th>
             <th>Total Paid Amount</th>
-            <th> Payable/Receivable </th>
+            <th> Payable or Receivable </th>
           </tr>
         <tbody>
           <tr *ngFor="let each of perUserTemp">
@@ -109,8 +118,10 @@ import { ToastrService } from 'ngx-toastr';
     </div>
 
     <a [routerLink]="['', 'users']" 
-      [ngStyle]="{display: 'flex',  'justify-content': 'end', 'margin-right':'100px', 'margin-bottom':'150px'}"
-    >back</a>
+      [ngStyle]="{display: 'flex',  'justify-content': 'center'}"
+      [ngClass]="'inline-gray-button'"
+      style="margin: 100px;"
+      >back</a>
     
   </div>
   `,
@@ -120,7 +131,9 @@ export class ListGroupComponent {
   private groupService = inject(GroupService);
   private activatedRouter = inject(ActivatedRoute);
   private router = inject(Router);
-  private toastr = inject(ToastrService)
+  private toastr = inject(ToastrService);
+
+  faPlusCircle = faPlusCircle;
 
   groupMembers: IGroupMember[] = []
   addMemberForm = inject(FormBuilder).nonNullable.group({
@@ -156,8 +169,6 @@ export class ListGroupComponent {
    }
    this.transactionsList = temp;
   }
-
-
 
   addMember() {
     let result = this.groupMembers.find(item => item.email == this.addMemberForm.get('email')?.value)
@@ -296,6 +307,4 @@ export class ListGroupComponent {
       this.chart.destroy();
     }
   }
-
 }
-

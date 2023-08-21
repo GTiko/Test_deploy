@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { GroupService } from '../group/group.service';
 import { DataService } from '../auth/data.service';
 import { IGroup, IGroupMemberResponse } from './IUser.interface';
+import { faHome, faSignOutAlt, faBell } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-user-list',
@@ -12,16 +13,23 @@ import { IGroup, IGroupMemberResponse } from './IUser.interface';
           <h1> Welcome {{ this.dataService.state().fullname }} </h1>
           <a [routerLink]="['', 'users', 'group', 'requests']" 
             [ngStyle]="{color:'#fff'}"
-          >Request <span [ngStyle]="{color: numberOfRequest>0 ? 'red':'#fff'}">({{ numberOfRequest }})</span></a>
-    </header> 
+          >
+          <fa-icon [icon]="faBell"></fa-icon>
+          
+          <span [ngStyle]="{color: numberOfRequest>0 ? 'red':'#fff'}">({{ numberOfRequest }})</span>
+        </a>
+          
+    </header>
   <div id="forms">
 
-    <div [ngStyle]="{'display':'flex','justify-content':'space-around'}">
+    <div id="page1">
       <div>
           <h4>Groups</h4>
-          <div *ngFor="let each of groups">
-            <a [routerLink]="['', 'users', 'group', each._id, each.title]">{{ each.title }} group</a>
-         </div>
+          <ul *ngFor="let each of groups">
+            <li>
+              <a [routerLink]="['', 'users', 'group', each._id, each.title]">{{ each.title }}</a>
+            </li>
+         </ul>
       </div>
 
     <div>
@@ -38,13 +46,14 @@ export class UserListComponent {
 
   groups: IGroup [] = []
   numberOfRequest: number = 0;
-  requestsList: IGroup[]=[]
+  requestsList: IGroup[]=[];
+
+  faBell = faBell;
 
   createGroup() {
     this.router.navigate(['', 'users', 'group', 'creategroup'])
 
   }
-
 
   ngOnInit() {
     this.groupService.getGroup().subscribe(

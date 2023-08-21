@@ -8,6 +8,7 @@ import { ListGroupComponent } from './group-list.component';
 import { TransactionComponent } from './group-transaction.component';
 import { GroupDetailsComponent } from './group-details.component';
 import { ErrorPageComponent } from '../error-page.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 
 @NgModule({
@@ -17,8 +18,9 @@ import { ErrorPageComponent } from '../error-page.component';
     ListGroupComponent,
     TransactionComponent,
     GroupDetailsComponent,
+    
   ],
-  imports: [ CommonModule, ReactiveFormsModule, RouterModule.forChild([
+  imports: [ CommonModule, ReactiveFormsModule,FontAwesomeModule, RouterModule.forChild([
     
     {path:'creategroup', component:CreateGroupComponent},
     {path:'requests', component:RequestComponent},

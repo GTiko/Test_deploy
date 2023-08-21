@@ -7,15 +7,17 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-create-group',
   template: `
-  <div id="createForm">  
-    <h2>Create Group</h2>
+  <h2>Create Group</h2>
 
-    <form [formGroup]="titleForm" (ngSubmit)="createGroup()">
+    <form [formGroup]="titleForm" (ngSubmit)="createGroup()"  id="loginForm" >
       <input type="text" placeholder="Group name" formControlName="groupName" /> &nbsp;
       <button type="submit" [disabled]="titleForm.invalid" class="btn btn-primary">CreateGroup</button>
     </form>
-    <a [routerLink]="['', 'users']">back</a>
-  </div>
+    
+    <div style="display:flex; justify-content: center; margin-top: 20px;">
+      <a [routerLink]="['', 'users']">back</a>
+    </div>
+
 
   `,
   styles: [],

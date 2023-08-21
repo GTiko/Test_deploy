@@ -17,6 +17,9 @@ import { WelcomeComponent } from './welcome.component'
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+
 function bootstrap() {
   let userService = inject(DataService);
   return () => {
@@ -35,6 +38,7 @@ function bootstrap() {
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    FontAwesomeModule,
     ToastrModule.forRoot({
       timeOut: 3000, 
       positionClass: 'toast-top-right', 
@@ -63,5 +67,6 @@ function bootstrap() {
     { provide: APP_INITIALIZER, multi: true, useFactory: bootstrap, deps: [] },
   ],
   bootstrap: [AppComponent],
+  
 })
 export class AppModule { }

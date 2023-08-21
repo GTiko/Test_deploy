@@ -27,7 +27,10 @@ import { IGroup } from '../users/IUser.interface';
       </tbody>
     </table>
     <a [routerLink]="['', 'users']"
-      [ngStyle]="{display: 'flex',  'justify-content': 'center', 'margin':'3%', 'margin-bottom':'20%'}"
+
+      [ngClass]="'inline-gray-button'"
+      
+      style="margin: 100px;, width: 10px;"
     >back</a>
 
   `,

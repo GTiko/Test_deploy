@@ -69,8 +69,5 @@ export class GroupDetailsComponent {
         }
       }
     );
-
-
   }
-
 }

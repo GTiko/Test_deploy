@@ -7,30 +7,37 @@ import jwt_decode from 'jwt-decode';
 import { environment as env } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-signin',
   template: `
   <header style="display: flex; justify-content: space-around;">
-    <h1  [routerLink]="['', 'welcome']" class="home">Home</h1>
-    <h1>Welcome to Track and Split Expense</h1>
+    <h1  [routerLink]="['', 'welcome']" class="home"> 
+      <fa-icon [icon]="faHome"></fa-icon>
+    </h1>
+
+    
+    <h1>Track and Split Expense</h1>
   </header>
   <div id="loginSignUp">
-    <h2> Login</h2>
     
     <div *ngIf="isLoading" class="loading-indicator">
       <div class="loading-spinner"></div>
     </div>
 
-
     <form [formGroup]="loginForm" (ngSubmit)="login()" id="loginForm">
+    <h1> Login</h1>
       <input type="email" placeholder="email" formControlName="email" /> <br />
       <input type="password" placeholder="password" formControlName="password" /> <br />
       <button type="submit" class="btn btn-primary" >Login</button>
-    </form>
-    <p style="display: flex; flex-direction: column; align-items: center;">
+
+      <p style="display: flex; flex-direction: column; align-items: center;">
       <a [routerLink]="['', 'signup']">Create new account</a>
     </p>
-    </div>
+    </form>
+
+  </div>
   `,
   styles: [],
 
@@ -41,8 +48,9 @@ export class LoginComponent {
   private dataService = inject(DataService);
   private toastr = inject(ToastrService);
 
+  faHome = faHome;
 
-  isLoading: boolean = false; 
+  isLoading: boolean = false;
 
   loginForm = inject(FormBuilder).nonNullable.group({
     email: ['', Validators.required],

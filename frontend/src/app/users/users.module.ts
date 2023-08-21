@@ -6,11 +6,15 @@ import { UserListComponent } from './user-list.component';
 import { checkTokenGuard } from '../auth/check-token.guard';
 import {ErrorPageComponent} from '../error-page.component'
 
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+
 @NgModule({
   declarations: [UserListComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FontAwesomeModule,
     RouterModule.forChild([
       { path: '', component: UserListComponent,  pathMatch: 'full' },
       {
